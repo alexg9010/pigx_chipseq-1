@@ -390,20 +390,20 @@ include: os.path.join(RULES_PATH, 'Summarize_Data_For_Report.py')
 include: os.path.join(RULES_PATH, 'Knit_Report.py')
 
 targets['final-report'] = {
-'description': "Produce a comprehensive report.",
-'files': SUMMARIZED_DATA_FOR_REPORT + REPORT
+'description': "Produce a comprehensive report. This is the default target.",
+'files': SUMMARIZED_DATA_FOR_REPORT + REPORT + targets['multiqc']
 }
 
 
 targets['complete'] = {
-'description': "Run full pipeline with all available targets. This is the default target.",
+'description': "Run full pipeline with all available targets. ",
 'files': flatten([targets[key]['files'] for key in targets.keys()])
 }
 
 # ----------------------------------------------------------------------------- #
 # TARGETTED EXECUTION
 # Selected output files from the above set.
-selected_targets = config['execution']['target'] or ['complete']
+selected_targets = config['execution']['target'] or ['final-report']
 
 # FIXME: the list of files must be flattened twice(!).  We should make
 # sure that the targets really just return simple lists.
